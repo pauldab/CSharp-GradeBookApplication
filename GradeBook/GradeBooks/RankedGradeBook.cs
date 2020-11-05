@@ -1,6 +1,7 @@
 ﻿using GradeBook.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GradeBook.GradeBooks
@@ -19,14 +20,18 @@ namespace GradeBook.GradeBooks
                 throw new InvalidOperationException();
             }
 
-            double Average = 0;
-            
-            foreach(var student in Students)
-            {
-                Average += student.AverageGrade;
-            }
+            var threshold = (int)Math.Ceiling(Students.Count * 0.2);
+            var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
 
-            if (averageGrade >= Average * 0.8) return 'A'; else return 'F';
+            if (averageGrade >= grades[threshold - 1])
+                return 'A';
+            if (averageGrade >= grades[(threshold * 2) - 1])
+                return 'B';
+            if (averageGrade >= grades[(threshold * 3) - 1])
+                return 'C';
+            if (averageGrade >= grades[(threshold * 4) - 1])
+                return 'D';
+            return 'F';
         }
     }
 }
