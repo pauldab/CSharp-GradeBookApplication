@@ -10,7 +10,7 @@ namespace GradeBook
             Console.WriteLine("#=======================#");
             Console.WriteLine("# Welcome to GradeBook! #");
             Console.WriteLine("#=======================#");
-
+  
             StartingUserInterface.CommandLoop();
             
             Console.WriteLine("Thank you for using GradeBook!");

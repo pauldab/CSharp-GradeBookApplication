@@ -19,7 +19,14 @@ namespace GradeBook.GradeBooks
                 throw new InvalidOperationException();
             }
 
-            return 'F';
+            double Average = 0;
+            
+            foreach(var student in Students)
+            {
+                Average += student.AverageGrade;
+            }
+
+            if (averageGrade >= Average * 0.8) return 'A'; else return 'F';
         }
     }
 }
