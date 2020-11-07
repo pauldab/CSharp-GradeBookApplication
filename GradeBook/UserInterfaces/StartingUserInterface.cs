@@ -34,17 +34,44 @@ namespace GradeBook.UserInterfaces
         public static void CreateCommand(string command)
         {
             var parts = command.Split(' ');
-            if (parts.Length != 2)
+            if (parts.Length != 3)
             {
-                Console.WriteLine("Command not valid, Create requires a name.");
+                Console.WriteLine("Command not valid, Create requires a name and type of gradebook.");
                 return;
             }
             var name = parts[1];
-            BaseGradeBook gradeBook = new BaseGradeBook(name);
+            var type = parts[2];
+
+            BaseGradeBook gradeBook = null;
+
+            switch (type)
+            {
+                case "standard":
+                    gradeBook = new BaseGradeBook(name);
+                    break;
+                case "ranked":
+                    gradeBook = new RankedGradeBook(name);
+                    break;
+                default:
+                    Console.WriteLine("{0} is not a supported type of gradebook, please try again", type);
+                    break;
+            }
+            
             Console.WriteLine("Created gradebook {0}.", name);
             GradeBookUserInterface.CommandLoop(gradeBook);
         }
 
+/*        Instantiate The Gradebook
+
+Set the value of gradeBook based on the value of the third substring from parts.
+
+parts will be set by user input, the second substring is the name of the gradebook, the third substring is the type of gradebook, and later the fourth will be if grading is weighted or not.
+
+    Remove the instantiation from where we declare the gradeBook variable.
+    If the third substring's value is "standard" set gradeBook to a new instantiation of StandardGradeBook.
+    If the third substring's value is "ranked" set gradeBook to a new instantiation of RankedGradeBook.
+    If the third substring's value doesn't match either of the above write the value the user entered followed by " is not a supported type of gradebook, please try again" then escape the method.
+*/
         public static void LoadCommand(string command)
         {
             var parts = command.Split(' ');
